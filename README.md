@@ -57,6 +57,14 @@
   ```
 
   - 주석
+  ``` go
+  //line comment
+  
+  /*
+  block comment
+  Java 주석과 동일하다
+  */
+  ```
   - 중괄호
   - 들여쓰기
   
