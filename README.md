@@ -44,7 +44,16 @@
 ### Step 2) 스터디한 컨텐츠와 당시 나온 질문들을 잘 정리하여, 이 곳에 정리한다. 
 
 ## [1회차 스터디] Go 소개 & 기본문법
-### 0. Go <a name = "0_go"></a> <br>  
+### 0. Go <a name = "0_go"></a> <br>
+  - Go를 배워야하는 이유? [Fluidity & easy of construction](https://www.youtube.com/watch?v=FTl0tl9BGdc)
+  - Go의 특징
+    - 컴파일시 자료형이 결정되는 정적 타입
+    - 별도의 가상머신이 필요없는 네이티브 바이너리
+    - 때때로 '인터프리터 언어가 실행준비하는 것보다 빠른' 컴파일어
+    - 실행 파일 내에 존재하는 가비지 콜렉션(Garbage Collector)
+    - CPU와 RAM에 부담이 훨씬 적은 고루틴(Goroutine)을 활용한 병행성(Concurrency) 확보 
+    - 헤더파일을 없애고, 소스코드를 패키지화하여 변경된 부분만 컴파일
+  
 ### 1. 기본문법: <a name = "1_basic"></a>
   - 세미콜론
   ``` go
