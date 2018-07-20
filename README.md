@@ -83,7 +83,7 @@
 ```
   - 들여쓰기: tab 사용, goplaygroud에서 사용할 때, 파이썬처럼 들여쓰기 규칙이 엄격하지 않은 것을 확인
   
- ### Q 오늘 나온 질문 & 흥미로운 포인트
+ ### Q [1회차 스터디] 오늘 나온 질문 & 흥미로운 포인트
   - fmt 패키지는? 정형화(formatted)된 I/O 함수를 가지고 있는 패키지, 놀랍게도 펌트("fumpt")라 발음한다!
   - go파일이 실행될 때, main 함수에 정의되지 않은 함수가 있으면 아래쪽을 스캔해서 활용함(C에서는 불가능하다함). 이 점은 자바와 유사해보인다.  
   
@@ -100,15 +100,5 @@ func main() {
 func a(){
  fmt.Println("abc")
 }
-```  
-``` java
- public static void main(String[] args)
-  {
-    a();
-  }
-  public static void a()
-  {
-    System.out.println("123");
-  }
 ```
-- 크로스 컴파일은 어떻게하는가? http://brownbears.tistory.com/68
+  - 크로스 컴파일은 어떻게하는가? http://brownbears.tistory.com/68
