@@ -122,8 +122,8 @@ func a(){
  ## [4회차 스터디] 변수 & 문자열
 ### 5. 배열&슬라이스 <a name = "5_slice"></a> 
 - 배열과 슬라이스의 차이점
-  - C/C++와 Java의 배열과 다르게 Go의 배열은 values이다. 그렇기 때문에 길이가 딱 정해져있고 Array를 복사하면, 원본과는 분리된 독립적인 파일이 생긴다(레퍼런스 타입 아님). 
-  - 그렇기 때문에 함수로 사이즈가 큰 배열을 넘기면, 해당 함수는 배열의 포인터나 레퍼런스가 아닌 "복사본"을 가진다. 메모리 사용이 커질 수 있다.
+  -1. C/C++와 Java의 배열과 다르게 Go의 배열은 values이다. 그래서 길이가 딱 정해져있고 Array를 복사하면, 원본과는 분리된 독립적인 파일이 생긴다(레퍼런스 타입 아님). 
+  - 위의 이유로 함수로 사이즈가 큰 배열을 넘기면, 해당 함수는 배열의 포인터나 레퍼런스가 아닌 "복사본"을 가진다. 메모리 사용이 커질 수 있다.
   - 이 문제를 해결하기 위해 슬라이스를 사용한다, 실제로 스터디 교재에서도 슬라이스를 더 많이 쓰게 될 거라는 언급이 있다. 
   
 	| 배열(Array)    | 슬라이스(Slice)  |
@@ -190,8 +190,27 @@ func main() {
 ### 6. 맵 <a name = "6_map"></a> 
 - 맵
   ``` go
-  //map
-  var 맵명 map[]
+	//변수명 := map[string]string{""}
+	chatlog := map[string]string{"name":"승혁", "message":"안녕하세요"}
+	var chatlogCopy = make(map[string]string)
+	chatlogCopy = chatlog
+
+	chatlogCopy["name"] = "관훈"
+	fmt.Println(chatlog["name"])  //결과값: 관훈
+	fmt.Println(chatlogCopy["name"]) //결과값: 관훈
+	
+	//chatlog["phoneType"] = "iPhone8" 
+	//fmt.Println(chatlog) //map[message:안녕하세요 phoneType:iPhone8 name:관훈]
+
+	//맵 key, value 삭제하기
+	delete(chatlog, "phoneType")
+	fmt.Println(chatlog) //map[name:관훈 message:안녕하세요]
+
+	//맵 순회하기
+	for key, value := range chatlog{
+		fmt.Println(key,value) //message 안녕하세요 name 관훈
+	}
+	
   ```
  ### Q [4회차 스터디] 오늘 나온 질문 & 흥미로운 포인트
   - array와 slice를 가르는 요건이 make()인지? slice는 언제 make()를 해야하는지? 왜 하는지? 
@@ -200,9 +219,10 @@ func main() {
   - 레퍼런스타입과 아닌 것들
   	*엄밀하게 map은 레퍼런스타입이 아니고 포인터라는 글이다. 사실, 아직 개념들이 정확히 안서서 흠.. 여기서 레퍼런스 타입은 copy의 구성데이터를 바꿨을 때, 원본의 데이터도 같이 바뀌는 경우를 의미한다(https://dave.cheney.net/2017/04/30/if-a-map-isnt-a-reference-variable-what-is-it)
 	*계속해서 새로운 자료형이 나오면 추가할 것이다. 
- 	|   레퍼런스타입  | 비레퍼런스타입  |
+	
+	|   레퍼런스타입    | 비레퍼런스타입  |
 	| ------------- |---------------| 
-	| string, number, array   | slice, map | 
+	| string, number, array| slice, map | 
 
 
 
