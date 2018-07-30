@@ -26,9 +26,6 @@
 | 2018.08.27 | 10.2. Go로 구현하는 블록체인-이더리움                    |                 | 혜진 | 회의실3 |
 | 2018.08.31 | 미니프로젝트4: Go를 활용한 블록체인 프로젝트              |                 | 관훈 | 회의실3 |
 
-
-
-
 스터디 커리큘럼 설계를 위해 [Discovery Go 언어](http://www.hanbit.co.kr/store/books/look.php?p_code=B5279497767)와 [가장 빨리 만나는 Go언어](http://pyrasis.com/go.html)를 참조하였습니다. 제가 분야 지식이 부족하여 일단 주요해보이는 것들을 넣었는데 스터디 리더가 공부를 하는 과정에서 빠진 내용 추가, 중요치 않은 내용은 삭제해도 좋습니다 :) 
 
 ## 스터디 방법
@@ -129,13 +126,13 @@ func a(){
   - 그렇기 때문에 함수로 사이즈가 큰 배열을 넘기면, 해당 함수는 배열의 포인터나 레퍼런스가 아닌 "복사본"을 가진다. 메모리 사용이 커질 수 있다.
   - 이 문제를 해결하기 위해 슬라이스를 사용한다, 실제로 스터디 교재에서도 슬라이스를 더 많이 쓰게 될 거라는 언급이 있다. 
   
-| 배열(Array)    | 슬라이스(Slice)  |
-| ------------- |---------------| 
-| 레퍼런스타입 X   | 레퍼런스타입 O  | 
-| 배열의 길이는 고정 | 훨씬 유연한 구조(append함수로 resize 가능) | 
-| 해당 없음 | make함수로 메모리 초기화 | 
-
-  ``` go
+	| 배열(Array)    | 슬라이스(Slice)  |
+	| ------------- |---------------| 
+	| 레퍼런스타입 X   | 레퍼런스타입 O  | 
+	| 배열의 길이는 고정 | 훨씬 유연한 구조<br>(append함수로 resize 가능) | 
+	| 해당 없음 | make함수로 메모리 초기화 | 
+	
+	``` go
 package main
 
 import "fmt"
@@ -176,20 +173,33 @@ fruitSlice:[kiwi banana orange plum]
 fruitSliceCopy:[kiwi banana orange plum]
  ```
 
+- 슬라이스에는.. 고생 좀 해보라는 것인지 따로 삽입 혹은 삭제가 빌트인 함수가 없다(•́ ̯•̀)
+ - 삽입: 확 와닿지는 않지만 i번째 값이 두 번 복사가 되게 배열을 만들고, i번째에 원하는 값을 넣는 구조이다.
+ 
+ ``` go
+func main() {
+	numSlice := []int{2,3,4,5}
+	numSlice = append(numSlice, 0) //공간확보
+	i := 0 //i번째에 넣는다 // 저장위치
+	copy(numSlice[i+1:], numSlice[i:])
+	fmt.Println(numSlice) // [2 2 3 4 5] copy 시행 이후numSlice[0]에 해당하는 2가 2번 생긴것을 확인할 수 있다.
+	numSlice[i] = 1 //[1 2 3 4 5] numSlice[0] = 1 에 넣음
+	fmt.Println(numSlice)
+}
+```
+
+
 ### 6. 맵 <a name = "6_map"></a> 
-- 조건문
+- 맵
   ``` go
-  //선언하고 사용하지 않은 변수는 에러가 나옴!  
-  이부분에 코드를 작성해주시면 됩니다! 
-  
+  //map
+  var 맵명 map[]
   ```
  ### Q [4회차 스터디] 오늘 나온 질문 & 흥미로운 포인트
   - array와 slice를 가르는 요건이 make()인지? slice는 언제 make()를 해야하는지? 왜 하는지? 
-  - 해당 변수의 메모리 초기화를 하는 역할로 파악된다. make()는 slices, maps, channels 에만 사용됨 ("three types represent, under the covers, references to data structures that must be initialized before use"). 
-
-  
-  - 레퍼런스타입과 아닌 것들
-  
+  - 해당 변수의 메모리 초기화를 하는 역할로 파악된다. make()는 slices, maps, channels 에만 사용됨 ("three types represent, under the covers, references to data structures that must be initialized before use")
+  - 왜 슬라이스에 용량 이상의 값을 넣어도 되는가? 슬라이스의 요소가 늘어나면 Go 런타임은 정해진 알고리즘에 의해 슬라이스의 용량을 늘리기 때문
+  - 레퍼런스타입과 아닌 것들  
  
 
 
