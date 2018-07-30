@@ -132,11 +132,8 @@ func a(){
 	| 배열의 길이는 고정 | 훨씬 유연한 구조<br>(append함수로 resize 가능) | 
 	| 해당 없음 | make함수로 메모리 초기화 | 
 	
-	``` go
-package main
 
-import "fmt"
-
+``` go
 func main() {
 	//배열 vs 슬라이스
 	//배열명 := [길이]타입{구성요소}; var 배열명 [길이]자료형
@@ -165,13 +162,14 @@ func main() {
 	fmt.Printf("fruitSliceCopy:%v\n\n",fruitSliceCopy)
 }
 
-결과값은?
+//결과값은?
 fruitArray:[apple banana orange]
 fruitArrayCopy:[kiwi banana orange]
 
 fruitSlice:[kiwi banana orange plum]
 fruitSliceCopy:[kiwi banana orange plum]
- ```
+
+```
 
 - 슬라이스에는.. 고생 좀 해보라는 것인지 따로 삽입 혹은 삭제가 빌트인 함수가 없다(•́ ̯•̀)
  - 삽입: 확 와닿지는 않지만 i번째 값이 두 번 복사가 되게 배열을 만들고, i번째에 원하는 값을 넣는 구조이다.
@@ -199,7 +197,12 @@ func main() {
   - array와 slice를 가르는 요건이 make()인지? slice는 언제 make()를 해야하는지? 왜 하는지? 
   - 해당 변수의 메모리 초기화를 하는 역할로 파악된다. make()는 slices, maps, channels 에만 사용됨 ("three types represent, under the covers, references to data structures that must be initialized before use")
   - 왜 슬라이스에 용량 이상의 값을 넣어도 되는가? 슬라이스의 요소가 늘어나면 Go 런타임은 정해진 알고리즘에 의해 슬라이스의 용량을 늘리기 때문
-  - 레퍼런스타입과 아닌 것들  
- 
+  - 레퍼런스타입과 아닌 것들
+  	*엄밀하게 map은 레퍼런스타입이 아니고 포인터라는 글이다. 사실, 아직 개념들이 정확히 안서서 흠.. 여기서 레퍼런스 타입은 copy의 구성데이터를 바꿨을 때, 원본의 데이터도 같이 바뀌는 경우를 의미한다(https://dave.cheney.net/2017/04/30/if-a-map-isnt-a-reference-variable-what-is-it)
+	*계속해서 새로운 자료형이 나오면 추가할 것이다. 
+ 	|   레퍼런스타입  | 비레퍼런스타입  |
+	| ------------- |---------------| 
+	| string, number, array   | slice, map | 
+
 
 
