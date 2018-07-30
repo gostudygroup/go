@@ -124,6 +124,58 @@ func a(){
 
  ## [4회차 스터디] 변수 & 문자열
 ### 5. 배열&슬라이스 <a name = "5_slice"></a> 
+- 배열과 슬라이스의 차이점
+  - C/C++와 Java의 배열과 다르게 Go의 배열은 values이다. 그렇기 때문에 길이가 딱 정해져있고 Array를 복사하면, 원본과는 분리된 독립적인 파일이 생긴다(레퍼런스 타입 아님). 
+  - 그렇기 때문에 함수로 사이즈가 큰 배열을 넘기면, 해당 함수는 배열의 포인터나 레퍼런스가 아닌 "복사본"을 가진다. 메모리 사용이 커질 수 있다.
+  - 이 문제를 해결하기 위해 슬라이스를 사용한다, 실제로 스터디 교재에서도 슬라이스를 더 많이 쓰게 될 거라는 언급이 있다. 
+  
+| 배열(Array)    | 슬라이스(Slice)  |
+| ------------- |---------------| 
+| 레퍼런스타입 X   | 레퍼런스타입 O  | 
+| 배열의 길이는 고정 | 훨씬 유연한 구조(append함수로 resize 가능) | 
+| 해당 없음 | make함수로 메모리 초기화 | 
+
+  ``` go
+package main
+
+import "fmt"
+
+func main() {
+	//배열 vs 슬라이스
+	//배열명 := [길이]타입{구성요소}; var 배열명 [길이]자료형
+	fruitArray := [3]string{"apple","banana","orange"}
+	var fruitArrayCopy [3]string
+
+	//복사
+	fruitArrayCopy = fruitArray
+	//복사한 녀석만 apple을 오렌지로!
+	fruitArrayCopy[0] = "kiwi"
+
+	fmt.Printf("fruitArray:%v\n", fruitArray)
+	fmt.Printf("fruitArrayCopy:%v\n\n",fruitArrayCopy)
+
+	//슬라이스
+	//변수 := []자료형{구성요소,구성요소}; var 	변수명 자료명 []자료형
+	fruitSlice := []string{"apple","banana","orange"}
+	var fruitSliceCopy []string
+
+	fruitSlice = append(fruitSlice,"plum")
+
+	fruitSliceCopy = fruitSlice
+	fruitSliceCopy[0] = "kiwi"
+
+	fmt.Printf("fruitSlice:%v\n", fruitSlice)
+	fmt.Printf("fruitSliceCopy:%v\n\n",fruitSliceCopy)
+}
+
+결과값은?
+fruitArray:[apple banana orange]
+fruitArrayCopy:[kiwi banana orange]
+
+fruitSlice:[kiwi banana orange plum]
+fruitSliceCopy:[kiwi banana orange plum]
+ ```
+
 ### 6. 맵 <a name = "6_map"></a> 
 - 조건문
   ``` go
@@ -134,6 +186,9 @@ func a(){
  ### Q [4회차 스터디] 오늘 나온 질문 & 흥미로운 포인트
   - array와 slice를 가르는 요건이 make()인지? slice는 언제 make()를 해야하는지? 왜 하는지? 
   - 해당 변수의 메모리 초기화를 하는 역할로 파악된다. make()는 slices, maps, channels 에만 사용됨 ("three types represent, under the covers, references to data structures that must be initialized before use"). 
+
+  
+  - 레퍼런스타입과 아닌 것들
   
  
 
