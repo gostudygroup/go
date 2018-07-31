@@ -229,6 +229,6 @@ func main() {
   
  
  ### 7.2. 함수심화: 함수리터럴, 클로저, <a name = "72_func"></a> 
-  - 클로저를 왜 사용하는지? 장점이 뭔지? 
+  - 클로저를 왜 사용하는지? 장점이 뭔지?(https://www.calhoun.io/5-useful-ways-to-use-closures-in-go/)
  
   
