@@ -226,9 +226,69 @@ func main() {
 
 
  ### 7.1. 함수 <a name = "71_func"></a> 
-  
+
  
  ### 7.2. 함수심화: 함수리터럴, 클로저, <a name = "72_func"></a> 
-  - 클로저를 왜 사용하는지? 장점이 뭔지?(https://www.calhoun.io/5-useful-ways-to-use-closures-in-go/)
- 
+  - 클로저란? 내부함수에서 외부함수의 속성을 사용하는 것이다. 자바스크립트에서 고급 개념이며, Go에서도 다뤄진다. 
+  - 예제로 우선 자바스크립트에서 내부함수가 외부함수인 title의 변수 정보를 활용하여 'coding everybody'를 출력해보자
+   ``` javascript 
+   function outter(){
+    var title = 'coding everybody';
+    function inner(){
+    	//함수내부에 title이 없으니, 외부에 있는 var title = ~ 를 활용하는 것을 클로저라고함 
+        console.log(title);
+    }
+    inner(); 
+}
+outter();
+   
+   ```
+   
+   ``` go
+   func main(){
+	var title = "coding everybody"
+	inner := func(){
+	fmt.Println(title)
+}
+inner()
+}
+ ```
+
+  - 클로저를 왜 사용하는지? 특징이나 [장점이 뭔지?](https://www.calhoun.io/5-useful-ways-to-use-closures-in-go/)
+    - 클로저의 내부 함수로 익명함수(aka 함수리터럴)가 잘 쓰인다, 생각해보면 어차피 외부함수에서만(를 통해서) 사용되는 것이기 때문에, 굳이 이름을 가질 필요가 있나라는 생각이든다. 클로저를 활용하면, 특정 함수를 몇 번 사용했는지 알 수 있다는 장점이 자주 언급되었는데, 아래의 예제처럼 외부함수의 전역별수에 i를 정의하고, 내부함수에서 i++를 넣어주면 된다. 
+    
+  ``` javascript 
+   function outter(){
+    var title = 'coding everybody';
+    i = 0
+    //리턴된 함수의 생은 마감했다..
+    return function(){
+        i++
+        console.log(title,i);
+      }
+    }
+    //return 하면서 외부함수가 이미 죽었지만, 외부함수로 인해 파생된 내부함수에서 이미 사라진 외부함수에 접근하고 있고, 그 접근이 이뤄진다0.0
+    inner = outter();
+    inner(); //결과값: coding everybody 1
+    inner(); //결과값: coding everybody 2
+    inner(); //결과값: coding everybody 3
   
+  ```
+  ``` go 
+  func main(){
+	closure := outter()
+	fmt.Println(closure()) //결과값: coding everybody 1
+	fmt.Println(closure()) //결과값: coding everybody 2
+	fmt.Println(closure()) //결과값: coding everybody 3
+  }
+
+  func outter() func() (string,int){
+	 var title= "coding everybody"
+	 i := 0
+	 return func() (string, int) {
+		i++
+		return title, i
+	}
+   }
+  
+ ```
