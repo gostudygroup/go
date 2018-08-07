@@ -257,7 +257,7 @@ inner()
  ```
 
   - 클로저를 왜 사용하는지? 특징이나 [장점이 뭔지?](https://www.calhoun.io/5-useful-ways-to-use-closures-in-go/)
-    - 클로저의 내부 함수로 익명함수(aka 함수리터럴)가 잘 쓰인다, 생각해보면 어차피 외부함수에서만(를 통해서) 사용되는 것이기 때문에, 굳이 이름을 가질 필요가 있나라는 생각이든다. 클로저를 활용하면, 특정 함수를 몇 번 사용했는지 알 수 있다는 장점이 자주 언급되었는데, 아래의 예제처럼 외부함수의 전역별수에 i를 정의하고, 내부함수에서 i++를 넣어주면 된다. 
+    - (1) 클로저를 활용하면, 특정 함수를 몇 번 사용했는지 알 수 있다는 장점이 자주 언급되었는데, 아래의 예제처럼 외부함수의 전역별수에 i를 정의하고, 내부함수에서 i++를 넣어주면 된다. 클로저의 내부 함수로 익명함수(aka 함수리터럴)가 잘 쓰인다, 생각해보면 어차피 외부함수에서만 사용되는 것이기 때문에, 굳이 이름을 가질 필요가 없지 않았나라는 생각이 든다. 
     
   ``` javascript 
    //javascript 
@@ -296,3 +296,58 @@ inner()
    }
   
  ```
+   - 클로저를 왜 사용하는지? Private Variables 
+     - (2) Private Variables: 우선 아래와 같은 녀석도 클로저함수라고한다. 왜냐? title은 외부에서 주어지는 매개변수이고, 이 title이 내부함수/메소드인 get_title, set_title에서 활용되는 글로벌 변수와 같은 역할을 한다. 많은 사람들이 프로그램 개발에 참여하게 되고, 변수에 접근해서 마음껏 바꾼다면 프로그램이 맛이 갈 확률이 높아진다한다. 이를 방지하기 위해, 클로저 함수가 쓰인다. title에 접근하려면 반드시 get_title, set_title 메소드를 사용해야한다. 생활코딩을 보며 납득이 간다 간다.. 해서 Go로 비슷하게 코드를 짰는데, 오류 일색이다 
+ ```javascript 
+ //javascript 
+ //private variables?
+//title에 접근하려면 get_title, set_title라는 메소드를 통해서만 접근가능
+//다른 사람이 title이라는 변수를 어떤식으로 외부에서 사용해도, 해당 맥락에 영향을 주지 않는다.
+function factory_movie(title){
+    return {
+        get_title : function(){
+            return title;
+        },
+        set_title : function(_title){
+            title = _title
+        }
+    }
+}
+
+title = '으헤헤헤헤헤' // 넌 아무런 영향도 줄 수 없지.ㅅ.
+
+ghost = factory_movie("Ghost in the shell")
+matrix = factory_movie("Matrix")
+
+console.log(ghost.get_title())  //Ghost in the shell
+console.log(matrix.get_title()) //Matrix
+
+ghost.set_title('공각기동대')
+
+console.log(ghost.get_title())  //공각기동대
+console.log(matrix.get_title()) //Matrix
+
+ ```
+  - 생활코딩을 보며 납득이 간다 간다.. 해서 Go로 비슷하게 코드를 짰는데, 오류 일색이다. 여러가지 생각점이 일단 1) return으로 함수를 두개를 받는게 저런 형태로 받으면 되는지, 2) javascript처럼 함수 ghost의 변수로 넣고 활용할 때, ghost.get_title()로 쓸 수 있는지도 확실치 않구.. 좀 더 공부하면서 공부해봐야겠다.  
+
+ ```go
+package main
+package main
+
+import "fmt"
+
+func main(){
+	ghost := factory_movie("Ghost in the shell")
+	fmt.Println(ghost.get_title())
+	ghost.set_title("공각기동대")
+	fmt.Print(ghost.get_title())
+
+}
+
+func factory_movie(title string){
+	return{
+		get_title := func(){return title};
+		set_title := func(_title string){title = _title}
+		}
+	}
+     
