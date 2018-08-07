@@ -331,6 +331,7 @@ console.log(matrix.get_title()) //Matrix
   - <strong>오류 일색이다</strong>. 여러가지 생각점이 일단 1) return으로 함수를 두개를 받는게 저런 형태로 받으면 되는지, 2) javascript처럼 함수 ghost의 변수로 넣고 활용할 때, ghost.get_title()로 쓸 수 있는지도 확실치 않구.. 좀 더 공부하면서 공부해봐야겠다.  
 
  ```go
+ //go
 package main
 package main
 
@@ -375,6 +376,7 @@ func factory_movie(title string){
   - 위와 같이 코딩하면, 계속 1만 10번 나온다. f1 = f2 부분만 작용하고, 이후에 f1은 리턴되었고, return 밖의 업데이트된 f1도 f2도 참고할 수 없다. 이 때, 클로저함수를 사용하면 깔끔하게 문제가 해결 가능하다! 왜냐? 클로저 함수는 return한 이후에도 f1,f2 값을 활용할 수 있다. 
   
  ```go
+ //go
  func makeFibGen int {
  	f1 := 0
 	f2 := 1
@@ -395,6 +397,7 @@ func factory_movie(title string){
   - 자바스크립트도 클로저를 활용하여, 피보나치 수열을 만들 수 있다. 클로저에 대한 대부분의 예제와 설명을 [생활코딩 Javascript 클로저](https://opentutorials.org/course/743/6544)를 참고하였다. 
 
 ```javascript
+//javascript
 function makeFibGen(){
     f1 = 0
     f2 = 1
