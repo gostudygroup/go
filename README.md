@@ -350,4 +350,69 @@ func factory_movie(title string){
 		set_title := func(_title string){title = _title}
 		}
 	}
-     
+```
+
+- 클로저를 왜 사용하는지? 자주하는 실수
+     - (3) 예컨데 피보나치 수열(0 1 1 2 3 5 8 11 ...)을 코딩하려고 한다. 
+ ```go
+ //go
+ func makeFibGen int {
+ 	f1 := 0
+	f2 := 1
+	f2, f1 = (f1+f2), f2
+	return f1
+ }
+ 
+ func main(){
+ 	gen := makeFibGen()
+ 	for i:=0;i<10;i++{
+	fmt.Println(gen())
+	} 
+ }
+ 
+ ```
+ 
+  - 위와 같이 코딩하면, 계속 1만 10번 나온다. f1 = f2 부분만 작용하고, 이후에 f1은 리턴되었고, return 밖의 업데이트된 f1도 f2도 참고할 수 없다. 이 때, 클로저함수를 사용하면 깔끔하게 문제가 해결 가능하다! 왜냐? 클로저 함수는 return한 이후에도 f1,f2 값을 활용할 수 있다. 
+  
+ ```go
+ func makeFibGen int {
+ 	f1 := 0
+	f2 := 1
+	return func() int {
+	f2, f1 = (f1+f2), f2
+	return f1
+	}
+ }
+ 
+ func main(){
+ 	gen := makeFibGen()
+ 	for i:=0;i<10;i++{
+	fmt.Println(gen())
+	} 
+ }
+ 
+ ```  
+  - 자바스크립트도 클로저를 활용하여, 피보나치 수열을 만들 수 있다. 클로저에 대한 대부분의 예제와 설명을 [생활코딩 Javascript 클로저](https://opentutorials.org/course/743/6544)를 참고하였다. 
+
+```javascript
+function makeFibGen(){
+    f1 = 0
+    f2 = 1
+    return function inner(){
+        [f2, f1] = [f1 + f2, f2]
+        return f1
+    }
+}
+
+let result = makeFibGen()
+
+for (let i=0;i<10;i++){
+    console.log(result())
+} 
+```
+
+
+  
+  
+  
+    
