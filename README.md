@@ -415,7 +415,7 @@ for (let i=0;i<10;i++){
 ```
  ### Q [5회차 스터디] 오늘 나온 질문 & 흥미로운 포인트
  -Go에서는 메소드와 함수를 구분한다. 객체지향형언어(Object-Oriented Programming)에서 class 내부에 정의된 함수를 메소드라 불렀다. 하지만, 엄밀하게 말하면 OOP가 아닌 Go에서 메소드란 리시버(receiver)를 가지고 있는 함수를 의미한다. receiver의 종류는 값을 가리키는 value receiver, 값이 저장된 주소를 알려주는 point receiver가 있다. Receiver points의 실제 값을 변경하고 싶을 때, point receiver를 사용하며, [A Tour of Go에 의하면 프로그래밍을 할 때, receiver 자체를 변경해야하는 경우가 많기 때문에 point receivers가 더 빈번하게 사용된다고 한다](https://tour.golang.org/methods/4). [다만, 기본적인 자료타입, 슬라이스, 작은 구조체의 경우 value receiver를 사용하는 것 또한 편리한 선택지란다.](https://stackoverflow.com/questions/27775376/value-receiver-vs-pointer-receiver-in-golang). [뭘써도 되도록 일관성 있게 쓰는 것이 좋다](https://golang.org/doc/faq)
- - 비트연산 부호(<<): 멋져보이고 싶을 때 사용하는 비트연산 부호 << 자리수를 왼쪽으로 옮길 수 있다, >> 하면 자리수를 
+ - 비트연산 부호(<<): 멋져보이고 싶을 때 사용하는 비트연산 부호 << 자리수를 왼쪽으로 옮길 수 있다, >> 하면 자리수를 오른쪽으로 옮길 수 있다. 
   ```go
 func main(){
  var a int8 = 3 // 3의 이진수로 표현하면 11 
