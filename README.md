@@ -257,7 +257,7 @@ inner()
  ```
 
   - 클로저를 왜 사용하는지? 특징이나 [장점이 뭔지?](https://www.calhoun.io/5-useful-ways-to-use-closures-in-go/)
-    - (1) 클로저를 활용하면, 특정 함수를 몇 번 사용했는지 알 수 있다는 장점이 자주 언급되었는데, 아래의 예제처럼 외부함수의 전역별수에 i를 정의하고, 내부함수에서 i++를 넣어주면 된다. 클로저의 내부 함수로 익명함수(aka 함수리터럴)가 잘 쓰인다, 생각해보면 어차피 외부함수에서만 사용되는 것이기 때문에, 굳이 이름을 가질 필요가 없지 않았나라는 생각이 든다. 
+    - (1) 클로저를 활용하면, 특정 함수를 몇 번 사용했는지 알 수 있다는 장점이 자주 언급되었는데, 아래의 예제처럼 외부함수에 변수 i를 정의하고, 내부함수에서 i++를 넣어주면 된다. 클로저의 내부 함수로 익명함수(aka 함수리터럴)가 잘 쓰인다, 생각해보면 어차피 외부함수에서만 사용되는 것이기 때문에, <strong>굳이 이름을 가질 필요가 없지 않았나라는 생각이 든다.</strong> 
     
   ``` javascript 
    //javascript 
@@ -328,7 +328,7 @@ console.log(ghost.get_title())  //공각기동대
 console.log(matrix.get_title()) //Matrix
 
  ```
-  - <strong>오류 일색이다</strong>. 여러가지 생각점이 일단 1) return으로 함수를 두개를 받는게 저런 형태로 받으면 되는지, 2) javascript처럼 함수 ghost의 변수로 넣고 활용할 때, ghost.get_title()로 쓸 수 있는지도 확실치 않구.. 좀 더 공부하면서 공부해봐야겠다.  
+  - <strong>오류 일색이다</strong>. 여러가지 생각점이 일단 1) return으로 함수를 두개를 받는게 저런 형태로 받으면 되는지, 2) javascript처럼 함수 ghost의 변수로 넣고 활용할 때, ghost.get_title()로 쓸 수 있는지도 확실치 않구.. 좀 더 공부하면서 공부해봐야겠다(*문제를 해결해주는 사람에게 커피쿠폰을 주겠다).  
 
  ```go
  //go
@@ -353,7 +353,7 @@ func factory_movie(title string){
 	}
 ```
 
-- 클로저를 왜 사용하는지? 자주하는 실수를 피할 수 있다! 
+- 클로저를 왜 사용하는지? 자주하는 실수를 피할 수 있다! (결국 내부함수가 외부함수의 변수들에 접근할 수 있는 클로저의 속성을 활용!) 
      - (3) 예컨데 피보나치 수열(0 1 1 2 3 5 8 11 ...)을 코딩하려고 한다. 
  ```go
  //go
@@ -373,7 +373,7 @@ func factory_movie(title string){
  
  ```
  
-  - 위와 같이 코딩하면, 계속 1만 10번 나온다. f1 = f2 부분만 작용하고, 이후에 f1은 리턴되었고, return 밖의 업데이트된 f1도 f2도 참고할 수 없다. 이 때, 클로저함수를 사용하면 깔끔하게 문제가 해결 가능하다! 왜냐? 클로저 함수는 return한 이후에도 f1,f2 값을 활용할 수 있다. 
+  - 위와 같이 코딩하면, 계속 1만 10번 나온다. f1 = f2 부분만 작용하고, 이후에 f1은 리턴되었고, return 밖의 업데이트된 f1도 f2도 참고할 수 없다. 이 때, 클로저함수를 사용하면 깔끔하게 문제가 해결 가능하다! <u>왜냐? 클로저 함수는 return한 이후에도 f1,f2 값을 활용할 수 있다.</u> 
   
  ```go
  //go
@@ -394,7 +394,7 @@ func factory_movie(title string){
  }
  
  ```  
-  - 자바스크립트도 클로저를 활용하여, 피보나치 수열을 만들 수 있다. 클로저에 대한 대부분의 예제와 설명을 [생활코딩 Javascript 클로저](https://opentutorials.org/course/743/6544)를 참고하였다. 
+  - 자바스크립트도 클로저를 활용하여, 피보나치 수열을 만들 수 있다. 클로저 파트에 대한 대부분의 예제와 설명을 [생활코딩 Javascript 클로저](https://opentutorials.org/course/743/6544)참고하여 재구성해보았다. 늘 감사한 생활코딩이다!  
 
 ```javascript
 //javascript
@@ -414,7 +414,41 @@ for (let i=0;i<10;i++){
 } 
 ```
  ### Q [5회차 스터디] 오늘 나온 질문 & 흥미로운 포인트
- -Go에서는 메소드와 함수를 구분한다. 객체지향형언어(Object-Oriented Programming)에서 class 내부에 정의된 함수를 메소드라 불렀다. 하지만, 엄밀하게 말하면 OOP가 아닌 Go에서 메소드란 리시버(receiver)를 가지고 있는 함수를 의미한다. receiver의 종류는 값을 가리키는 value receiver, 값이 저장된 주소를 알려주는 point receiver가 있다. Receiver points의 실제 값을 변경하고 싶을 때, point receiver를 사용하며, [A Tour of Go에 의하면 프로그래밍을 할 때, receiver 자체를 변경해야하는 경우가 많기 때문에 point receivers가 더 빈번하게 사용된다고 한다](https://tour.golang.org/methods/4). [다만, 기본적인 자료타입, 슬라이스, 작은 구조체의 경우 value receiver를 사용하는 것 또한 편리한 선택지란다.](https://stackoverflow.com/questions/27775376/value-receiver-vs-pointer-receiver-in-golang). [뭘써도 되도록 일관성 있게 쓰는 것이 좋다](https://golang.org/doc/faq)
+ -Go에서는 메소드와 함수를 구분한다. 객체지향형언어(Object-Oriented Programming)에서 class 내부에 정의된 함수를 메소드라 불렀다. 하지만, 엄밀하게 말하면 OOP가 아닌 Go에서 메소드란 리시버(receiver)를 가지고 있는 함수를 의미한다. receiver의 종류는 값을 가리키는 value receiver, 값이 저장된 주소를 알려주는 pointer receiver가 있다. Receiver points의 실제 값을 변경하고 싶을 때, point receiver를 사용하며, [A Tour of Go에 의하면 프로그래밍을 할 때, receiver 자체를 변경해야하는 경우가 많기 때문에 point receivers가 더 빈번하게 사용된다고 한다](https://tour.golang.org/methods/4). [다만, 기본적인 자료타입, 슬라이스, 작은 구조체의 경우 value receiver를 사용하는 것 또한 편리한 선택지란다.](https://stackoverflow.com/questions/27775376/value-receiver-vs-pointer-receiver-in-golang). [뭘써도 되도록 일관성 있게 쓰는 것이 좋다](https://golang.org/doc/faq)
+ 
+ - 아래의 예제처럼 value receiver(v Vertex)로 Vertex 값을 받으면, Vertex값의 복사복을 만들어서 작업을 하는 효과가 발생한다. v.Scale(10)의 결과인 v.X = 3*10, v.Y = 4*10 그 결과 향후 v.X, v.Y가 지속적으로 30과 40으로 유지되는 것이 아니다. v.Abs()를 할 때는 다시 v.X와 v.Y는 3과 4이고 그 결과 Abs(제곱합의 평균)은 5가 나온다!    
+ - 만약 v.X, v.Y가 지속적으로 30과 40으로 유지시키고 싶다면, 다시 말해 아예 v.X, v.Y를 Scale() 작업 이후의 값으로 고정시키고 싶다면 간단하게 Asterisk(*)를 넣어주면 된다. 그 경우 결과값은 sqrt((30)^2+(40)^2) = 50이다! 
+ 
+ 
+  ```go
+  package main
+  import(
+  "fmt"
+  "math"
+  )
+  type Vertex struct{
+      X,Y float64	
+  }
+  
+  func (v Vertex) Abs() float64{
+      return math.Sqrt(v.X*v.X + v.Y*v.Y)
+  }
+  
+  func (v Vertex) Scale(f float64){ // 여기를 포인터 리시버인 (v *Vertex)로 변경하면 결과 값이 50이 나온다!
+      v.X = v.X*f
+      v.Y = v.Y*f	 
+  }
+  
+  func main(){
+  v := Vertex{3,4}
+  v.Scale(10)
+  fmt.Println(v.Abs())
+  }
+ 
+  ```
+    
+
+  
  - 비트연산 부호(<<): 멋져보이고 싶을 때 사용하는 비트연산 부호 << 자리수를 왼쪽으로 옮길 수 있다, >> 하면 자리수를 오른쪽으로 옮길 수 있다. 
   ```go
 func main(){
