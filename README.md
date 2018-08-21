@@ -475,7 +475,11 @@ func main(){
  
  
  ### 9. 인터페이스 <a name = "9_interface"></a> 
+ 
+ ### 미니프로젝트1
+1. nil 하고 router; http가 내장이라서 따로 정의해줄 필요가 없어서 nil, mux router는 외장이니깐, 따로 적어줌 
+2. encoder(),decoder() 차이
+3. &person인지
+4. *http.Request 인지 http.Request
 
-  
-  
     
