@@ -44,9 +44,9 @@
 ### 0. Go <a name = "0_go"></a> <br>
   - Go를 배워야하는 이유? [Fluidity & easy of construction](https://www.youtube.com/watch?v=FTl0tl9BGdc)
   - Go의 특징
-    - 컴파일시 자료형이 결정되는 정적 타입
+    - 컴파일시 자료형(int, float, char)이 결정되는 정적 타입
     - 별도의 가상머신이 필요없는 네이티브 바이너리
-    - 때때로 인터프리터 언어가 준비 시간보다 빠른 컴파일어
+    - 때때로 인터프리터 언어 준비 시간보다 빠른 컴파일어
     - 실행 파일 내에 존재하는 가비지 콜렉션(Garbage Collector)
     - CPU와 RAM에 부담이 훨씬 적은 고루틴(Goroutine)을 활용한 병행성(Concurrency) 확보 
     - 헤더파일을 없애고, 소스코드를 패키지화하여 변경된 부분만 컴파일
@@ -172,7 +172,7 @@ fruitSliceCopy:[kiwi banana orange plum]
 ```
 
 - 슬라이스에는.. 고생 좀 해보라는 것인지 따로 삽입 혹은 삭제가 빌트인 함수가 없다(•́ ̯•̀)
- - 삽입: 확 와닿지는 않지만 i번째 값이 두 번 복사가 되게 배열을 만들고, i번째에 원하는 값을 넣는 구조이다.
+ - 삽입: 확 와닿지는 않지만 i번째 값이 두 개 배열을 만들고, i번째에 원하는 값을 넣는 구조이다.
  
  ``` go
 func main() {
@@ -478,6 +478,22 @@ func main(){
 
 
  ### 10. 고루틴 <a name = "10_goroutine"></a> 
+ - GO언어는 go 키워드를 통해 여러 개의 함수를 동시해 실행할 수 있으며, 이렇게 실행된 함수를 고루틴(Goroutine)이라고 한다. 이는 쓰레드와는 다르다는데.. 나는 쓰레드를 잘 모르니깐, 정리를 해본다. 
+ 
+ - 쓰레드(thread): [본 동영상 내용의 요약이다](https://www.youtube.com/watch?v=h_HwkHobfs0) 컴퓨터에서 제일 중요한 파트를 고르자면 CPU, RAM 그리구 이 둘의 인터페이스인 Memory controller일 것이다. (한 개의 프로그램만 실행한다면 이들 관계에 큰 어려움이 없었을텐데,) 문제는.. 여러 개의 프로그램의 돌릴 때이다. 한정된 CPU와 RAM을 어떻게 쪼개쓸 것인가? 
+ - 여기서 Process의 개념이 생긴다. Process란 a logical container 이며, 현재 돌아가고 있는 모든 프로그램에 대한 정보를 가지고 있다. 
+![image](https://user-images.githubusercontent.com/41136658/45471997-cd63fb00-b76d-11e8-843b-69f4f73d8e3d.png)
+ - 프로그램의 상태에 맞춰서 커널인 스케줄(CPU, RAM 할당이겠지?)을 해준다. 예컨데, 특정 프로그램이 수면모드라면, 해당 프로세스에 CPU 자원을 할당하지 않는다. 만약에 하나의 프로그램이 동시에 2가지 작업을 처리하고 싶다면, 이 때 쓰레드라는 개념이 나온다. ![image](https://user-images.githubusercontent.com/41136658/45472196-70b51000-b76e-11e8-977b-5ea53e13291b.png =60x60)
+ - 문제 상황은, 두 개의 쓰레드가 작업 과정 속에서 <strong>같은 비트의 코드에 접근</strong>할 수 있다는 것이다. 예컨데 하나의 쓰레드에서 변수에 10을 더하는 작업이 있고, 또 다른 쓰레드는 0으로 만드는게 있다면, 두 작업이 번갈아 가면서 일어나면 오묘한 결과가 나올 수 있다. 특정 부분을 코드가 정말 크리티컬하다면, 그 부분을 lock을 할 수 있다. 여러 쓰레드에 의해서 공유되는 데이터를 보호하기 위해 sync 패키지에 있는 Mutex를 사용한다. RWMutex를 활용하여 읽기와 쓰기 동작을 나누어 락을 걸 수도 있다. 다만, 이로 인해 다른 문제가 또 생길 수 있다. 예컨데, Thread1이 특정 코드에 접근하여 작업을 하는데, 해당 작업이 끝나려면 Thread2의 연산이 필요하다. 이 경우, Thread1은 작업을 끝내기 위해 Thread2의 작업을 기다린다. 하지만 해당 코드가 잠겨 접근할 수 없는 Thread2는 해당 부분에 접근하지 못하고 Thread1이 끝나길 대기하고 있는 상태를 교착상태(Deadlock)라 한다. ![image](https://user-images.githubusercontent.com/41136658/45472928-96dbaf80-b770-11e8-83d1-eda0f03ef2d1.png)
+
+ 
+ 
+
+
+ 
+ 
+ 
+ 
  
  ### 미니프로젝트1 <a name = "mini01"></a>
  - REST API를 활용하여 만들어 볼 것인데, REST가 도대체 뭐고 어떤 장점이 있기에 여기어 맞춰서 API를 개발하는지 정리해본다. 바야흐로 2000년 Roy Fielding이 박사 논문으로 "Architectural Styles and the Design of Network-based Software Architectures(아키텍처 스타일과 네트웨크 기반 소프트웨어 디자인)"을 발표한다. <strong>HTTP(Hypertext Transfer Protocol)와 일관성있게 웹서비스를 하기위해 만들어진 일종의 규약</strong>이라고 한다. Roy Fielding은 HTTP(브라우저와 웹서버 사이에서 하이퍼텍스트 문서를 전송할 때 사용하는 프로토콜)의 핵심 개발인물 중 하나였으니, HTTP의 장점을 살릴 수 있는 웹서비스 설계에 대한 고민이 많지 않았을까싶다.   
